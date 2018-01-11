@@ -1,5 +1,9 @@
-nexus:
-  build: nexus
-  ports:
-   - "8081:8081"
-  restart: unless-stopped
+version: '2'
+
+services:
+  nexus:
+    build:
+      context: "nexus"
+    ports:
+    - "8081:8081"
+    restart: unless-stopped

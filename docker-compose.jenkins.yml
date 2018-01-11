@@ -1,14 +1,22 @@
-jenkinsmaster:
-  build: jenkins-master
-  environment:
-   - JAVA_OPTS=-Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/Moscow -Duser.timezone=Europe/Moscow -Dhudson.model.DirectoryBrowserSupport.CSP=
-  volumes:
-   - jenkins_home:/var/lib/jenkins/
-  ports:
-   - "50000:50000"
-   - "8080:8080"
-  restart: unless-stopped
-  environment:
-    - NEXUS_PORT=8081
-    - SONAR_PORT=9000
-    - SONAR_DB_PORT=5432
+version: '2'
+
+volumes:
+  jenkins_home:
+    external: true
+
+services:
+  jenkinsmaster:
+    build:
+      context: "jenkins-master"
+    environment:
+    - JAVA_OPTS=-Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/Moscow -Duser.timezone=Europe/Moscow -Dhudson.model.DirectoryBrowserSupport.CSP=
+    volumes:
+    - jenkins_home:/var/lib/jenkins/
+    ports:
+    - "50000:50000"
+    - "8080:8080"
+    restart: unless-stopped
+    environment:
+      - NEXUS_PORT=8081
+      - SONAR_PORT=9000
+      - SONAR_DB_PORT=5432
