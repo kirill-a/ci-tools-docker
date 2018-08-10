@@ -1,0 +1,66 @@
+version: '3'
+
+volumes:
+  jenkins_home:
+  data:
+  prometheus.yml:
+
+services:
+  jenkinsmaster:
+    build:
+      context: "jenkins-master"
+    environment:
+    - JAVA_OPTS=-Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/Moscow -Duser.timezone=Europe/Moscow -Dhudson.model.DirectoryBrowserSupport.CSP=
+    volumes:
+    - jenkins_home:/var/lib/jenkins/
+    ports:
+    - "50000:50000"
+    - "8080:8080"
+    restart: unless-stopped
+    environment:
+      - NEXUS_PORT=8081
+      - SONAR_PORT=9000
+      - SONAR_DB_PORT=5432
+
+  nexus:
+    build:
+      context: "nexus"
+    ports:
+    - "8081:8081"
+    restart: unless-stopped
+
+  sonarqube:
+    build:
+      context: "sonar"
+    ports:
+    - "9000:9000"
+    links:
+    - db
+    environment:
+    - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
+    restart: unless-stopped
+
+  db:
+    image: postgres
+    volumes:
+      - data:/var/lib/postgresql
+    environment:
+    - POSTGRES_USER=sonar
+    - POSTGRES_PASSWORD=sonar
+    restart: unless-stopped
+
+  prom:
+    build:
+      context: "prometheus"
+    ports:
+    - "9090:9090"
+    volumes:
+    - prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+    - '-config.file=/etc/prometheus/prometheus.yml'
+    restart: unless-stopped
+    
+  node-exporter:
+    image: prom/node-exporter
+    ports:
+    - "9100:9100"

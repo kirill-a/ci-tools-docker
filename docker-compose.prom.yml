@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  prom:
+    build:
+      context: "prometheus"
+    ports:
+    - "9090:9090"
+    restart: unless-stopped
