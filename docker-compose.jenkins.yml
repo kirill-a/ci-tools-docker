@@ -1,8 +1,7 @@
-version: '2'
+version: '3'
 
 volumes:
   jenkins_home:
-    external: true
 
 services:
   jenkinsmaster:

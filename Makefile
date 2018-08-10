@@ -14,9 +14,9 @@ deploy:
 
 clean:
 	${INFO} "Deleting Jenkins..."
-	@ docker-compose -f docker-compose.jenkins.yml down --remove-orphans
+	@ docker-compose -f docker-compose.jenkins.yml down -v --remove-orphans
 	${INFO} "Deleting Nexus..."
-	@ docker-compose -f docker-compose.nexus.yml down --remove-orphans
+	@ docker-compose -f docker-compose.nexus.yml down -v --remove-orphans
 	${INFO} "Deleting SonarQube..."
 	@ docker-compose -f docker-compose.sonar.yml down -v --remove-orphans
 	${INFO} "Cleanup complete"

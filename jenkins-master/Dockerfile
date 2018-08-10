@@ -3,11 +3,11 @@ FROM jenkins/jenkins:lts
 MAINTAINER kirill
 
 # Give Jenkins at least 2 GB of memory pool, set time zone to Europe/Moscow instead of UTC, turn off security rules for correct HTML publishing
-ENV JAVA_OPTS="-Xmx2048M -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/Moscow -Duser.timezone=Europe/Moscow -Dhudson.model.DirectoryBrowserSupport.CSP="
+ENV JAVA_OPTS="-Xmx2048M -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/Moscow -Duser.timezone=Europe/Moscow -Dhudson.model.DirectoryBrowserSupport.CSP= -Djenkins.install.runSetupWizard=false"
 
 USER jenkins
 # Install plugins
-RUN install-plugins.sh git windows-slaves
+# RUN install-plugins.sh git windows-slaves
 
 # Setup ssh connection to git. You need to copy your id_rsa file to dir with Dockerfile
 # RUN  echo "    IdentityFile /usr/share/jenkins/ref/.ssh/id_rsa" >> /etc/ssh/ssh_config

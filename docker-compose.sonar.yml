@@ -1,7 +1,7 @@
-version: '2'
+version: '3'
 
 volumes:
-  data: {}
+  data:
 
 services:
   sonarqube:
@@ -17,15 +17,9 @@ services:
 
   db:
     image: postgres
-    volumes_from:
-      - datadb
+    volumes:
+      - data:/var/lib/postgresql
     environment:
     - POSTGRES_USER=sonar
     - POSTGRES_PASSWORD=sonar
     restart: unless-stopped
-
-  datadb:
-    image: postgres
-    volumes:
-      - data:/var/lib/postgresql
-    command: /bin/true
