@@ -54,10 +54,6 @@ services:
       context: "prometheus"
     ports:
     - "9090:9090"
-    volumes:
-    - prometheus.yml:/etc/prometheus/prometheus.yml
-    command:
-    - '-config.file=/etc/prometheus/prometheus.yml'
     restart: unless-stopped
     
   node-exporter:
