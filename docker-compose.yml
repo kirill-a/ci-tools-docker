@@ -21,6 +21,9 @@ services:
       - NEXUS_PORT=8081
       - SONAR_PORT=9000
       - SONAR_DB_PORT=5432
+    networks:
+      ci:
+        ipv4_address: 172.25.0.10
 
   nexus:
     build:
@@ -28,6 +31,9 @@ services:
     ports:
     - "8081:8081"
     restart: unless-stopped
+    networks:
+      ci:
+        ipv4_address: 172.25.0.11
 
   sonarqube:
     build:
@@ -39,6 +45,9 @@ services:
     environment:
     - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
     restart: unless-stopped
+    networks:
+      ci:
+        ipv4_address: 172.25.0.12
 
   db:
     image: postgres
@@ -48,6 +57,9 @@ services:
     - POSTGRES_USER=sonar
     - POSTGRES_PASSWORD=sonar
     restart: unless-stopped
+    networks:
+      ci:
+        ipv4_address: 172.25.0.13
 
   prom:
     build:
@@ -55,8 +67,22 @@ services:
     ports:
     - "9090:9090"
     restart: unless-stopped
+    networks:
+      ci:
+        ipv4_address: 172.25.0.14
     
   node-exporter:
     image: prom/node-exporter
     ports:
     - "9100:9100"
+    networks:
+      ci:
+        ipv4_address: 172.25.0.15
+    
+networks:
+  ci:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.0.0/16
