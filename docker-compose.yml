@@ -3,7 +3,6 @@ version: '3'
 volumes:
   jenkins_home:
   data:
-  prometheus.yml:
 
 services:
   jenkinsmaster:
