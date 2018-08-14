@@ -6,12 +6,13 @@
 
 #### Run all services with Make:
 
-`make deploy` - Run all services with Make
+`make deploy_all` - Create all services with Make
 
-`make clean` - Remove all services
+`make clean_all` - Remove all services
 
 Passwords for services:
 
 1. SonarQube: admin/admin
 2. Nexus: admin/admin123
 3. Jenkins: admin /var/jenkins_home/secrets/initialAdminPassword
+4. Grafana: admin/admin

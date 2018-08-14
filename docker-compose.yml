@@ -77,6 +77,14 @@ services:
     networks:
       ci:
         ipv4_address: 172.25.0.15
+        
+  grafana:
+    image: grafana/grafana
+    ports:
+    - "3000:3000"
+    networks:
+      ci:
+        ipv4_address: 172.25.0.16
     
 networks:
   ci:
