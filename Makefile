@@ -12,6 +12,11 @@ deploy:
 	${INFO} "Browse to localhost:8081 for Nexus"
 	${INFO} "Browse to localhost:9000 for Sonar"
 
+deploy_all:
+	${INFO} "Creating whole stack..."
+	@ docker-compose -f docker-compose.yml up -d --build
+	${INFO} "Build complete"
+	
 clean:
 	${INFO} "Deleting Jenkins..."
 	@ docker-compose -f docker-compose.jenkins.yml down -v --remove-orphans
@@ -19,6 +24,11 @@ clean:
 	@ docker-compose -f docker-compose.nexus.yml down -v --remove-orphans
 	${INFO} "Deleting SonarQube..."
 	@ docker-compose -f docker-compose.sonar.yml down -v --remove-orphans
+	${INFO} "Cleanup complete"
+	
+clean_all:
+	${INFO} "Deleting stack..."
+	@ docker-compose -f docker-compose.yml down -v --remove-orphans
 	${INFO} "Cleanup complete"
 
 # Cosmetics
